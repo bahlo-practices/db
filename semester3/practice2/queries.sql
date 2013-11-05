@@ -12,3 +12,10 @@ SELECT abflug.abflugtag as abflugtag, flugtyp.flugnummer as flugnummer, flugzeug
 SELECT flugnummer, abflugtag FROM abflug WHERE abflugtag >= 10.11.2000 AND abflugtag <= 20.11.2000 ORDER BY abflugtag, zeit DESC LIMIT 1
 # f)
 SELECT abflug.abflugtag as abflugtag, abflug.flugnummer as flugnummer, flugzeug.hersteller as hersteller, flugzeug.typ as typ, flugzeug.seriennummer as seriennummer FROM abflug INNER JOIN flugtyp ON flugtyp.flugnummer = abflug.flugnummer INNER JOIN flugzeug ON flugzeug.seriennummer = abflug.flugzeugseriennummer WHERE abflug.abflugtag >= 9.11.2001 AND abflug.abflugtag <= 21.11.2001 AND flugtyp.startflughafen = 'Luxemburg' AND flugtyp.zielflughafen = 'Ankara'
+# g)
+SELECT flugzeug.hersteller as hersteller, flugzeug.typ as typ, flugzeug.seriennummer as seriennummer, ersatzteil.preis as einzelkosten FROM flugzeug INNER JOIN benoetigt_ersatzteil ON flugzeug.seriennummer = benoetigt_ersatzteil.seriennummer INNER JOIN ersatzteil ON ersatzteil.ersatzteilnummer = benoetigt_ersatzteil.ersatzteilnummer WHERE ersatzteil.bezeichnung = 'Schraube Z M12' ORDER BY flugzeug.seriennummer
+# h)
+SELECT ersatzteil.preis as gesamtkosten, ersatzteil.bezeichnung as bezeichnung FROM flugzeug INNER JOIN benoetigt_ersatzteil ON flugzeug.seriennummer = benoetigt_ersatzteil.seriennummer INNER JOIN ersatzteil ON ersatzteil.ersatzteilnummer = benoetigt_ersatzteil.ersatzteilnummer WHERE ersatzteil.bezeichnung = 'Schraube Z M12' GROUP BY bezeichnung
+# i)
+SELECT flugzeug.hersteller as hersteller, flugzeug.typ as typ, flugzeug.seriennummer as seriennummer, ersatzteil.preis as einzelkosten, ersatzteil.bezeichnung as bezeichnung FROM flugzeug INNER JOIN benoetigt_ersatzteil ON flugzeug.seriennummer = benoetigt_ersatzteil.seriennummer INNER JOIN ersatzteil ON ersatzteil.ersatzteilnummer = benoetigt_ersatzteil.ersatzteilnummer WHERE ersatzteil.bezeichnung = 'Schraube Z M12' OR ersatzteil.bezeichnung = 'Mutter M12' GROUP BY flugzeug.seriennummer ORDER BY einzelkosten
+# j)
